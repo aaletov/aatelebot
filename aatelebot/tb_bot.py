@@ -97,7 +97,7 @@ def get_vk_updates(groups, v=v):
 
     for i in range(len(groups)):
         try:
-            update = vkapi.wall.get(owner_id = groups[i]['group_id'], count = 50, v = v)    
+            update = vkapi.wall.get(owner_id = groups[i]['group_id'], count = 15, v = v)    
         except:
             print('Group %s is blocked'%groups[i]['name'])
         new_count = update['count'] - groups[i]['count']
@@ -160,6 +160,9 @@ def send_post(post, tgapi_url = tgapi_url):
     if post.text != '' and att_count == 0:
         method = 'sendMessage'
         params.update({'text':post.group_name + '\n\n' + post.text})
+
+    elif post.text == '' and att_count == 0:
+        return
 
     elif att_count == 1:
         params.update({'caption':post.group_name + '\n\n' + post.text})
@@ -267,6 +270,7 @@ if __name__ == '__main__':
         updates = get_video_info(updates)
         for post in updates:
             send_post(post)
+            sleep(1)
 
         sleep(600)
 
