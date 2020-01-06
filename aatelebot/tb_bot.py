@@ -51,7 +51,7 @@ class VkPost():
                         self.docs.append(attachment['doc']['url'])
 
     def __str__(self):
-            return str([self.text, str(self.photos), str(self.videos), str(self.docs)])
+            return str([self.group_name, self.text, str(self.photos), str(self.videos), str(self.docs)])
 
 
 def get_post_object(url, v = v):
@@ -84,7 +84,7 @@ def get_groups_list(v=v):
     for i in range(groups['count']):
         IDs.append(-int(groups['items'][i]) )
     for i in range(len(IDs)):
-        A.append({'group_id':IDs[i],'offset':0, 'name':Names[i]})
+        A.append({'group_id':IDs[i],'count':0, 'name':Names[i]})
 
     groups = A 
 
@@ -97,21 +97,23 @@ def get_vk_updates(groups, v=v):
 
     for i in range(len(groups)):
         try:
-            update = vkapi.wall.get(owner_id = groups[i]['group_id'], offset = groups[i]['offset'], count = 10, v = v)    
+            update = vkapi.wall.get(owner_id = groups[i]['group_id'], count = 50, v = v)    
         except:
             print('Group %s is blocked'%groups[i]['name'])
+        new_count = update['count'] - groups[i]['count']
+        update_new = update['items'][:new_count]
         posts = []
-        for post in update['items']:
+        for post in update_new:
             copy_history = post.get('copy_history')
             if copy_history == None:
                 posts.append(VkPost(groups[i]['name'], post = post ) )
         
         posts.reverse()
         vk_updates += posts
-        groups[i]['offset'] = update['count']
+        groups[i]['count'] = update['count']
         sleep(0.33)
 
-    return(vk_updates)
+    return(vk_updates , groups)
 
 def get_video_info(vkp_list, v=v):
     #Разовое получение информации о всех видео из апдейта
@@ -130,6 +132,7 @@ def get_video_info(vkp_list, v=v):
         part = videos_list[i*100:(i+1)*100]
         response = vkapi.video.get(videos = ','.join(part), v=v )
         items += response['items']
+
     response = vkapi.video.get(videos = ','.join(videos_list[len(videos_list)//100*100: ] ), v=v )
     items += response['items']
 
@@ -195,7 +198,7 @@ def send_post(post, tgapi_url = tgapi_url):
                             'media':photo 
                             }
                         )
-                print(media_array)#############
+          
                 params.update({'media':json.dumps(media_array) } )
                 return(requests.post(tgapi_url + method, params = params) )
 
@@ -210,6 +213,7 @@ def send_post(post, tgapi_url = tgapi_url):
                 method = 'sendMediaGroup'
                 media_array = []
                 files = {}
+
                 for i in range(len(post.videos)):
                     filename = 'file' + str(i)
                     version.download_video_vk(post.videos[i], filename)
@@ -234,18 +238,45 @@ def send_post(post, tgapi_url = tgapi_url):
 
     return(requests.post(tgapi_url + method, params))
 
-groups = get_groups_list()
-updates = get_vk_updates(groups)
-updates = get_video_info(updates)
+def update_groups_list(groups, v=v):
+    new_list = get_groups_list()
+    new_ids = set([i['group_id'] for i in new_list] )
+    old_ids = set([i['group_id'] for i in groups] )
+    inter = new_ids & old_ids
+    sub = new_ids - inter
+    leaved = old_ids - inter
+    for i in range(len(groups ) ):
+        if groups[i]['group_id'] in leaved:
+            groups[i].pop()
     
+    for i in range(len(new_list )):
+        in new_list[i]['group_id'] in sub:
+            groups.aapend(new_list[i] )
+
+    return groups
+
+groups = get_groups_list()
+updates, groups = get_vk_updates(groups)
+updates = get_video_info(updates)
+updates = []
+sleep(300)
+updates, groups = get_vk_updates(groups)
+updates = get_video_info(updates)
 for post in updates:
-    try:
-        response = send_post(post)
-        if response == '<Response [200]>' or response == '<Response [404]>':
-            print(post)
-            raise IndexError
-    except:
-        print(post)
-        raise IndexError
-    sleep(1)
+    print(post, '\n')
+
+if __name__ == '__main__':
+    last_upd = time()
+    groups = get_groups_list()
+
+    while True:
+        if (time() - last_upd)//3600 > 0:
+            groups = update_groups_list(groups)
+
+        updates, groups = get_vk_updates(groups)
+        updates = get_video_info(updates)
+        for post in updates:
+            send_post(post)
+
+        sleep(600)
 
