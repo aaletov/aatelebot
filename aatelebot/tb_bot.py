@@ -250,8 +250,8 @@ def update_groups_list(groups, v=v):
             groups[i].pop()
     
     for i in range(len(new_list )):
-        in new_list[i]['group_id'] in sub:
-            groups.aapend(new_list[i] )
+        if new_list[i]['group_id'] in sub:
+            groups.append(new_list[i] )
 
     return groups
 
