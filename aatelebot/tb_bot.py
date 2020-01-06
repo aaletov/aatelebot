@@ -255,16 +255,6 @@ def update_groups_list(groups, v=v):
 
     return groups
 
-groups = get_groups_list()
-updates, groups = get_vk_updates(groups)
-updates = get_video_info(updates)
-updates = []
-sleep(300)
-updates, groups = get_vk_updates(groups)
-updates = get_video_info(updates)
-for post in updates:
-    print(post, '\n')
-
 if __name__ == '__main__':
     last_upd = time()
     groups = get_groups_list()
