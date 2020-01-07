@@ -1,1 +1,1 @@
-worker: python aatelebot\tb_bot.py
+worker: python aatelebot\\tb_bot.py
