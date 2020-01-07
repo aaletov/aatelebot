@@ -294,7 +294,7 @@ if __name__ == '__main__':
         for post in updates:
             try:
                 sendPost(post, '-1001430319971')
-                if post.group_id not in post_filter:
+                if str(post.group_id) not in post_filter:
                     sendPost(post, '-1001185715274')
                 sleep(1)
             except:
