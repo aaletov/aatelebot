@@ -10,7 +10,6 @@ groups = get_groups_list()
 while True:
     with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
         groups = eval(file.read() )
-    print(groups)
 
     if (time() - last_upd)//3600 > 0:
         groups = update_groups_list(groups)
