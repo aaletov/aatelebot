@@ -106,7 +106,7 @@ def get_vk_updates(groups, v=v):
         except:
             print('Group %s is blocked'%groups[i]['name'])
         new_count = update['count'] - groups[i]['count']
-        print(update['items'], '\n\n')
+        print(update['items'], '\n\n', groups[i], '\n')
         if update['items'][0].get('is_pinned') != 1:
             update_new = update['items'][:new_count]
         else:
