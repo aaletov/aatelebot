@@ -27,6 +27,8 @@ class VkPost():
         self.photos = []
         self.videos = []
         self.docs = []
+        self.group_id = post['owner_id']
+
         if post != None:
             if post['marked_as_ads'] == 1:
                 self.text = ''
@@ -292,7 +294,7 @@ if __name__ == '__main__':
         for post in updates:
             try:
                 sendPost(post, '-1001430319971')
-                if post not in post_filter:
+                if post.group_id not in post_filter:
                     sendPost(post, '-1001185715274')
                 sleep(1)
             except:
