@@ -7,7 +7,7 @@ path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 last_upd = time()
 groups = get_groups_list()
 groups = update_groups_list(groups)
-updates, groups = get_vk_updates()
+updates, groups = get_vk_updates(groups)
 
 with open(path_ + 'updated.txt', 'w', encoding = 'utf-8') as file:
     file.write(groups)
