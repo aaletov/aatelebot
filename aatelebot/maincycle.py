@@ -6,6 +6,11 @@ path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 last_upd = time()
 groups = get_groups_list()
+groups = update_groups_list(groups)
+updates, groups = get_vk_updates()
+
+with open(path_ + 'updated.txt', 'w', encoding = 'utf-8') as file:
+    file.write(groups)
 
 while True:
     with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
