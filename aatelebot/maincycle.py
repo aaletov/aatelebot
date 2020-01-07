@@ -1,7 +1,7 @@
 import time
 from tg_bot import *
 import os.path
-
+print('imported')
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
 last_upd = time()
