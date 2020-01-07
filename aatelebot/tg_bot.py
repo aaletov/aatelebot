@@ -270,9 +270,13 @@ def update_groups_list(groups, v=v):
     inter = new_ids & old_ids
     sub = new_ids - inter
     leaved = old_ids - inter
+    to_delete = []
     for i in range(len(groups ) ):
         if groups[i]['group_id'] in leaved:
-            groups.pop(i)
+            to_delete.append(groups[i])
+
+    for group in to_delete:
+        groups.remove(group)
     
     for i in range(len(new_list )):
         if new_list[i]['group_id'] in sub:
