@@ -3,13 +3,14 @@ from tg_bot import *
 import os.path
 
 
-path_ = os.getcwd() + '//' + 'aatelebot' + '//'
+path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
 last_upd = time()
 groups = get_groups_list()
 
 while True:
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
         groups = eval(file.read() )
+    print(groups)
 
     if (time() - last_upd)//3600 > 0:
         groups = update_groups_list(groups)
