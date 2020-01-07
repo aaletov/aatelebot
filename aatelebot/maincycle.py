@@ -1,14 +1,14 @@
 import time
 from tg_bot import *
 import os.path
-print('imported')
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
+#path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 last_upd = time()
 groups = get_groups_list()
 
 while True:
-    with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
+    with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
         groups = eval(file.read() )
     print(groups)
 
