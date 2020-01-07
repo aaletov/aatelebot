@@ -102,7 +102,10 @@ def get_vk_updates(groups, v=v):
         except:
             print('Group %s is blocked'%groups[i]['name'])
         new_count = update['count'] - groups[i]['count']
-        update_new = update['items'][:new_count]
+        if update['items'][0].get('is_pinned') != 1:
+            update_new = update['items'][:new_count]
+        else:
+            update_new = update['items'][1:new_count+1]
         posts = []
         for post in update_new:
             copy_history = post.get('copy_history')
@@ -283,9 +286,13 @@ if __name__ == '__main__':
 
         updates, groups = get_vk_updates(groups)
         updates = get_video_info(updates)
+        with open(os.getcwd() + '\\filter.txt', 'r', encoding = 'utf-8') as file:
+            post_filter = file.read().eval().keys()
         for post in updates:
             try:
                 sendPost(post, '-1001430319971')
+                if post not in post_filter:
+                    sendPost(post, '-1001185715274')
                 sleep(1)
             except:
                 print('API_Error\n', post, '\n\n')
