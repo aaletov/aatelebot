@@ -6,6 +6,7 @@ import os
 vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206'
 session = vk.Session(access_token = vk_token)
 vkapi = vk.API(session)
+path_ = ''
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
@@ -32,7 +33,7 @@ def download_video_vk(url, filename):
     r = requests.get(url)
     f = r.content
 
-    with open(os.getcwd() + '\\' + filename + '.mp4', 'wb') as file:
+    with open(path_ + filename + '.mp4', 'wb') as file:
         file.write(f)
 
 v = get_version()

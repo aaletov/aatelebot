@@ -10,6 +10,7 @@ from copy import deepcopy, copy
 vk_token = 'da85fb5129c0a72383163ea16171aa2b3d4679595ab28631e1fbe53fa2599f6049c1aae04875b1f65a683' #чепига
 tg_token = '751858938:AAG4i-Ec8VfdnnQcSOGOOCdVwl6jIH1cv6Y'
 tgapi_url = "https://api.telegram.org/bot{}/".format(tg_token)
+path = ''
 
 session = vk.Session(access_token = vk_token)
 vkapi = vk.API(session)
@@ -209,7 +210,7 @@ def sendVideos(videos, params, group_name, text = '', tgapi_url = tgapi_url):
     if len(videos) == 1:
         method = 'sendVideo'
         version.download_video_vk(videos[0], 'file')
-        files = {'video': open(os.getcwd() + '\\file.mp4', 'rb')} #multipart/form-data
+        files = {'video': open(path_ + 'file.mp4', 'rb')} #multipart/form-data
         params.update({'supports_streaming':True, 'caption':group_name + '\n\n' + text})
         try:
             response = requests.post(tgapi_url + method, params = params, files = files )
@@ -234,7 +235,7 @@ def sendVideos(videos, params, group_name, text = '', tgapi_url = tgapi_url):
                     'supports_streaming': True 
                     } 
                 )
-            files.update({filename + '.mp4': open(os.getcwd() + '\\' + filename + '.mp4', 'rb') } )
+            files.update({filename + '.mp4': open(path_ + filename + '.mp4', 'rb') } )
 
         media_array[0].update({'caption':group_name + '\n\n' + text} )
         params.update({'media':json.dumps(media_array)} )
@@ -286,7 +287,7 @@ if __name__ == '__main__':
 
         updates, groups = get_vk_updates(groups)
         updates = get_video_info(updates)
-        with open(os.getcwd() + '\\filter.txt', 'r', encoding = 'utf-8') as file:
+        with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
             post_filter = file.read().eval().keys()
         for post in updates:
             try:
