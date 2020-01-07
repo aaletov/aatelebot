@@ -288,7 +288,7 @@ if __name__ == '__main__':
         updates, groups = get_vk_updates(groups)
         updates = get_video_info(updates)
         with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
-            post_filter = file.read().eval().keys()
+            post_filter = eval(file.read() ).keys()
         for post in updates:
             try:
                 sendPost(post, '-1001430319971')

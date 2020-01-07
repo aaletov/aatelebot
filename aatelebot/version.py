@@ -6,7 +6,7 @@ import os
 vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206'
 session = vk.Session(access_token = vk_token)
 vkapi = vk.API(session)
-path_ = os.getcwd() + '\\' + 'aatelebot'
+path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
