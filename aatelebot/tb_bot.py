@@ -4,6 +4,7 @@ import version
 import os
 import json
 from time import time, sleep
+from copy import deepcopy
 
 #vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206' #елкин
 vk_token = 'da85fb5129c0a72383163ea16171aa2b3d4679595ab28631e1fbe53fa2599f6049c1aae04875b1f65a683' #чепига
@@ -144,7 +145,7 @@ def get_video_info(vkp_list, v=v):
 
     for i in posts:
         for j in range(len(vkp_list[i].videos)):
-            if urls[0].find('vk') != -1:
+            if urls[0].find('youtube') == -1 and urls[0].find('vimeo') == -1 and urls[0].find('rutube') == -1 and urls[0].find('yandex') == -1 :
                 vkp_list[i].videos[j] = urls.pop(0)
             else:
                 vkp_list[i].videos.pop(0)
@@ -174,8 +175,13 @@ def send_post(post, tgapi_url = tgapi_url):
         elif post.videos != []:
             method = 'sendVideo'
             version.download_video_vk(post.videos[0], 'file')
-            files = {'video': open(os.getcwd() + '\\file.mp4', 'rb')} # multipart/form-data
-            response = requests.post(tgapi_url + method, params = params, files = files )
+            files = {'video': open(os.getcwd() + '\\file.mp4', 'rb')} #multipart/form-data
+            params.update({'supports_streaming':True})
+            try:
+                response = requests.post(tgapi_url + method, params = params, files = files )
+            except:
+                response = None
+                print('Upload Error')
 
             return response
         elif post.docs != []:
@@ -203,12 +209,11 @@ def send_post(post, tgapi_url = tgapi_url):
                         )
           
                 params.update({'media':json.dumps(media_array) } )
-                return(requests.post(tgapi_url + method, params = params) )
 
             else:
-                post_copy = post
+                post_copy = deepcopy(post)
                 post_copy.text, post_copy.videos, post_copy.docs = '', [], []
-                send_post(group_name = post.group_name, post = post_copy)
+                send_post(post_copy)
             post.text = ''
         
         if post.videos != []:
@@ -231,12 +236,18 @@ def send_post(post, tgapi_url = tgapi_url):
 
                 media_array[0].update({'caption':post.group_name + '\n\n' + post.text} )
                 params.update({'media':json.dumps(media_array)} )
-                return(requests.post(tgapi_url + method, params = params, files = files) )
+                try:
+                    response = requests.post(tgapi_url + method, params = params, files = files)
+                except:
+                    response = None
+                    print('Upload Error')
+
+                return response
 
             else:
-                post_copy = post
+                post_copy = deepcopy(post)
                 post_copy.text, post_copy.photos, post_copy.docs = '', [], []
-                send_post(group_name = post.group_name, post = post_copy)
+                send_post(post = post_copy)
             post.text = ''
 
     return(requests.post(tgapi_url + method, params))
@@ -269,8 +280,12 @@ if __name__ == '__main__':
         updates, groups = get_vk_updates(groups)
         updates = get_video_info(updates)
         for post in updates:
-            send_post(post)
-            sleep(1)
+            try:
+                send_post(post)
+                sleep(1)
+            except:
+                print('API_Error\n', post, '\n\n')
+                raise IndexError
 
         sleep(600)
 
