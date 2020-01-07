@@ -11,8 +11,7 @@ while True:
     with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
         groups = eval(file.read() )
 
-    if (time() - last_upd)//3600 > 0:
-        groups = update_groups_list(groups)
+    groups = update_groups_list(groups)
 
     updates, groups = get_vk_updates(groups)
 
