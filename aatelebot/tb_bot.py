@@ -10,7 +10,7 @@ from copy import deepcopy, copy
 vk_token = 'da85fb5129c0a72383163ea16171aa2b3d4679595ab28631e1fbe53fa2599f6049c1aae04875b1f65a683' #чепига
 tg_token = '751858938:AAG4i-Ec8VfdnnQcSOGOOCdVwl6jIH1cv6Y'
 tgapi_url = "https://api.telegram.org/bot{}/".format(tg_token)
-path_ = os.getcwd() + '\\' + 'aatelebot'
+path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 
 session = vk.Session(access_token = vk_token)
 vkapi = vk.API(session)
