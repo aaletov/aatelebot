@@ -6,8 +6,8 @@ import json
 from time import time, sleep
 from copy import deepcopy, copy
 
-#vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206' #елкин
-vk_token = 'da85fb5129c0a72383163ea16171aa2b3d4679595ab28631e1fbe53fa2599f6049c1aae04875b1f65a683' #чепига
+vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206' #елкин
+#vk_token = 'da85fb5129c0a72383163ea16171aa2b3d4679595ab28631e1fbe53fa2599f6049c1aae04875b1f65a683' #чепига
 tg_token = '751858938:AAG4i-Ec8VfdnnQcSOGOOCdVwl6jIH1cv6Y'
 tgapi_url = "https://api.telegram.org/bot{}/".format(tg_token)
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
