@@ -10,7 +10,7 @@ groups = update_groups_list(groups)
 updates, groups = get_vk_updates(groups)
 
 with open(path_ + 'updated.txt', 'w', encoding = 'utf-8') as file:
-    file.write(groups)
+    file.write(str(groups) )
 
 while True:
     with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
