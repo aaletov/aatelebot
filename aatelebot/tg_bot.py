@@ -261,7 +261,6 @@ def sendDocuments(docs, params, group_name, text = '', tgapi_url = tgapi_url):
     for doc in docs[1:]:
         params1 = copy(params)
         params1.update({'document':doc})
-        print(params1)
         responses.append(requests.post(tgapi_url + method, params1) )
 
     return responses 
