@@ -31,10 +31,10 @@ while True:
     for post in updates:
         try:
             sendPost(post, '-1001430319971')
-            sleep(1)
+            sleep(2)
             if str(post.group_id) not in post_filter:
                 sendPost(post, '-1001185715274')
-            sleep(1)
+            sleep(2)
         except:
                 print('API_Error\n', post, '\n\n')
                 raise IndexError
