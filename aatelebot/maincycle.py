@@ -1,6 +1,7 @@
 import time
 from tg_bot import *
 import os.path
+from copy import deepcopy
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
@@ -30,11 +31,12 @@ while True:
 
     for post in updates:
         try:
+            copypost = deepcopy(post)
             sendPost(post, '-1001430319971')
-            sleep(2)
+            sleep(1)
             if str(post.group_id) not in post_filter:
-                sendPost(post, '-1001185715274')
-            sleep(2)
+                sendPost(copypost, '-1001185715274')
+            sleep(1)
         except:
                 print('API_Error\n', post, '\n\n')
                 raise IndexError
