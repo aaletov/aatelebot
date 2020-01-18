@@ -174,6 +174,7 @@ class Group():
 
     def get_group_updates(self):
         try:
+            print(self.owner_id) ############
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v)    
         except:
             print('Unable to get %s \'s posts'%self.name)
