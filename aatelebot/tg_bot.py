@@ -203,7 +203,6 @@ class MyBot():
         self.tgapi_url = "https://api.telegram.org/bot{}/".format(tgtoken)
         session = vk.Session(access_token = vktoken)
         self.vkapi = vk.API(session)
-        self.chat_id = chat_id
 
     def get_groups_list(self, v=v):
     #Получение списка сообществ текущего пользователя
