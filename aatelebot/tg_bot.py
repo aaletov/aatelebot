@@ -50,36 +50,36 @@ class VkPost():
                     elif type == 'doc':
                         self.docs.append(attachment['doc']['url'])
 
-    def send(self, chat_id, tgapi_url = tgapi_url):
+    def send(self, chat_id, tgapi_url):
         att_count = len(self.videos + self.photos + self.docs)
         params = {'chat_id': chat_id}
         if self.text != '' and att_count == 0:
-            sendMessage(self.group_name + '\n\n' + self.text, params)
+            sendMessage(self.group_name + '\n\n' + self.text, params, tgapi_url = tgapi_url)
 
         if self.photos != []:
-            sendPhotos(self.photos, params, self.group_name, self.text )
+            sendPhotos(self.photos, params, self.group_name, self.text, tgapi_url = tgapi_url)
             self.notext = True
 
         if self.videos != []:
             if self.notext:
-                sendVideos(self.videos, params, self.group_name, '')
+                sendVideos(self.videos, params, self.group_name, text = '', tgapi_url = tgapi_url)
             else:
-                sendVideos(self.videos, params, self.group_name, self.text)
+                sendVideos(self.videos, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
             self.notext = True
 
         if self.docs != []:
             if self.notext:
-                sendDocuments(self.docs, params, self.group_name, '')
+                sendDocuments(self.docs, params, self.group_name, text = '', tgapi_url = tgapi_url)
             else:
-                sendDocuments(self.docs, params, self.group_name, self.text)
+                sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
-    def sendMessage(text, params, tgapi_url = tgapi_url):
+    def sendMessage(text, params, tgapi_url):
         method = 'sendMessage'
         params.update({'text':text})
         return(requests.post(tgapi_url + method, params))
 
-    def sendPhotos(photos, params, group_name, text = '', tgapi_url = tgapi_url ):
+    def sendPhotos(photos, params, group_name, tgapi_url, text = ''):
         if len(photos) == 1:
             method = 'sendPhoto'
             params.update({'photo':photos[0], 'caption': group_name + '\n\n' + text})
@@ -106,7 +106,7 @@ class VkPost():
 
         return(requests.post(tgapi_url + method, params))
 
-    def sendVideos(videos, params, group_name, text = '', tgapi_url = tgapi_url):
+    def sendVideos(videos, params, group_name, tgapi_url, text = ''):
         if len(videos) == 1:
             method = 'sendVideo'
             version.download_video_vk(videos[0], 'file')
@@ -147,7 +147,7 @@ class VkPost():
 
             return response
 
-    def sendDocuments(docs, params, group_name, text = '', tgapi_url = tgapi_url):
+    def sendDocuments(docs, params, group_name, tgapi_url, text = ''):
         method = 'sendDocument'
         params1 = copy(params)
         params1.update({'document':docs[0], 'caption': group_name + '\n\n' + text})
