@@ -177,6 +177,7 @@ class Group():
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v)    
         except:
             print('Unable to get %s \'s posts'%self.name)
+            return None
         new_count = update['count'] - self.last_count
         self.last_count = update['count']
         
