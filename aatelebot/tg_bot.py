@@ -234,6 +234,7 @@ class MyBot():
         self.posts = []
         for group in self.groups:
             self.posts += group.get_group_updates()
+            sleep(0.33)
 
         self.posts = self.get_video_info()
         self.posts.sort(key = lambda post: int(post.date) )
