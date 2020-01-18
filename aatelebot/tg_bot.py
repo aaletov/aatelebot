@@ -172,9 +172,8 @@ class Group():
         self.name = groupobj['name']
         self.last_count = 0
 
-    def get_group_updates(self):
+    def get_group_updates(self, vkapi):
         try:
-            print(self.owner_id) ############
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v)    
         except:
             print('Unable to get %s \'s posts'%self.name)
@@ -234,7 +233,7 @@ class MyBot():
     def get_updates(self):
         self.posts = []
         for group in self.groups:
-            self.posts += group.get_group_updates()
+            self.posts += group.get_group_updates(self.vkapi)
             sleep(0.33)
 
         self.posts = self.get_video_info()
@@ -255,10 +254,10 @@ class MyBot():
     
         for i in range(len(videos_list)//100):
             part = videos_list[i*100:(i+1)*100]
-            response = vkapi.video.get(videos = ','.join(part), v=v )
+            response = self.vkapi.video.get(videos = ','.join(part), v=v )
             items += response['items']
 
-        response = vkapi.video.get(videos = ','.join(videos_list[len(videos_list)//100*100: ] ), v=v )
+        response = self.vkapi.video.get(videos = ','.join(videos_list[len(videos_list)//100*100: ] ), v=v )
         items += response['items']
 
         for item in items:
@@ -283,7 +282,7 @@ class MyBot():
                 post.send(chat_id)
 
 
-def get_post_object(url, v = v):
+def get_post_object(url, vkapi, v = v):
 #Получение объетка по url
 
     str1 = url.find('wall')
