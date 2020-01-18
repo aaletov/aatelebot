@@ -13,17 +13,17 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token)
 Bot.get_groups_list()
 Bot.get_updates()
 
-with shelve.open(path_ + 'botfile', flag ='c') as file:
+with shelve.open(path_ + 'botfile.txt', flag ='c') as file:
     file['Bot'] = Bot
 
 while True:
-    with shelve.open(path_ + 'botfile', flag ='c') as file:
+    with shelve.open(path_ + 'botfile.txt', flag ='c') as file:
         Bot = file['Bot']
 
     Bot.update_groups_list()
     Bot.get_updates()
 
-    with shelve.open(path_ + 'botfile', flag ='c') as file:
+    with shelve.open(path_ + 'botfile.txt', flag ='c') as file:
         file['Bot'] = Bot
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
