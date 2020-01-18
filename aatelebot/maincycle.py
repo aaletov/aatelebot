@@ -9,7 +9,7 @@ tg_token = '751858938:AAG4i-Ec8VfdnnQcSOGOOCdVwl6jIH1cv6Y'
 path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 
-Bot = Mybot(vktoken = vk_token, tg_token = tgtoken)
+Bot = MyBot(vktoken = vk_token, tg_token = tgtoken)
 Bot.get_groups_list()
 Bot.get_updates()
 
