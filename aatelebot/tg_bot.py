@@ -208,13 +208,13 @@ class MyBot():
         self.vkapi = vk.API(session)
         self.v = v
 
-    def get_groups_list(self, v=v):
+    def get_groups_list(self, v=self.v):
     #Получение списка сообществ текущего пользователя
 
         response = self.vkapi.groups.get(v = v, extended = '1')
         self.groups = [Group(i) for i in response['items'] ]
 
-    def update_groups_list(self, v=v):
+    def update_groups_list(self, v=self.v):
         new_list = self.get_groups_list()
         new_ids = set([i.owner_id for i in new_list] )
         old_ids = set([i.owner_id for i in self.groups] )
@@ -242,7 +242,7 @@ class MyBot():
         self.posts = self.get_video_info()
         self.posts.sort(key = lambda post: int(post.date) )
 
-    def get_video_info(self, v=v):
+    def get_video_info(self, v=self.v):
     #Разовое получение информации о всех видео из апдейта(не вызывается вручную)
         vkp_list = self.posts
         urls = []
