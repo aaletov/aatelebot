@@ -8,7 +8,6 @@ from copy import deepcopy, copy
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
-v = version.get_version()
 
 class VkPost():
     def __init__(self, group_name, post = None):
@@ -172,7 +171,7 @@ class Group():
         self.name = groupobj['name']
         self.last_count = 0
 
-    def get_group_updates(self, vkapi):
+    def get_group_updates(self, vkapi, v):
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v)    
         except:
@@ -203,10 +202,11 @@ class Group():
 
 
 class MyBot():
-    def __init__(self, vktoken, tgtoken, v=v):
+    def __init__(self, vktoken, tgtoken, v):
         self.tgapi_url = "https://api.telegram.org/bot{}/".format(tgtoken)
         session = vk.Session(access_token = vktoken)
         self.vkapi = vk.API(session)
+        self.v = v
 
     def get_groups_list(self, v=v):
     #Получение списка сообществ текущего пользователя
@@ -236,7 +236,7 @@ class MyBot():
     def get_updates(self):
         self.posts = []
         for group in self.groups:
-            self.posts += group.get_group_updates(self.vkapi)
+            self.posts += group.get_group_updates(self.vkapi, v = self.v)
             sleep(0.33)
 
         self.posts = self.get_video_info()
