@@ -260,7 +260,7 @@ class MyBot():
             response = self.vkapi.video.get(videos = ','.join(part), v=self.v )
             items += response['items']
 
-        response = self.vkapi.video.get(videos = ','.join(videos_list[len(videos_list)//100*100: ] ), v=v )
+        response = self.vkapi.video.get(videos = ','.join(videos_list[len(videos_list)//100*100: ] ), v=self.v )
         items += response['items']
 
         for item in items:
