@@ -2,43 +2,38 @@ import time
 from tg_bot import *
 import os.path
 from copy import deepcopy
+import shelve
 
+vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206' #елкин
+tg_token = '751858938:AAG4i-Ec8VfdnnQcSOGOOCdVwl6jIH1cv6Y'
 path_ = os.getcwd() + '//' + 'aatelebot' + '//' 
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
-last_upd = time()
-groups = get_groups_list()
-groups = update_groups_list(groups)
-updates, groups = get_vk_updates(groups)
 
-with open(path_ + 'updated.txt', 'w', encoding = 'utf-8') as file:
-    file.write(str(groups) )
+Bot = tg_bot.Mybot(vktoken = vk_token, tg_token = tgtoken)
+Bot.get_groups_list()
+Bot.get_updates()
+
+with shelve.open(path + 'botfile', flag ='c') as file:
+    file['Bot'] = Bot
 
 while True:
-    with open(path_ + 'updated.txt', 'r', encoding = 'utf-8') as file:
-        groups = eval(file.read() )
+    with shelve.open(path + 'botfile', flag ='c') as file:
+        Bot = file['Bot']
 
-    groups = update_groups_list(groups)
+    Bot.update_groups_list()
+    Bot.get_updates()
 
-    updates, groups = get_vk_updates(groups)
-
-    with open(path_ + 'updated.txt', 'w', encoding = 'utf-8') as file:
-        file.write(str(groups) )
-
-    updates = get_video_info(updates)
+    with shelve.open(path + 'botfile', flag ='c') as file:
+        file['Bot'] = Bot
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
         post_filter = eval(file.read() )[0].keys()
-
-    for post in updates:
-        try:
-            copypost = deepcopy(post)
-            sendPost(post, '-1001430319971')
-            sleep(1)
-            if str(post.group_id) not in post_filter:
-                sendPost(copypost, '-1001185715274')
-            sleep(1)
-        except:
-                print('API_Error\n', post, '\n\n')
-                raise IndexError
-
+    
+    try:
+        Bot.sendAll('-1001430319971')
+        sleep(1)
+        Bot.sendAll('-1001185715274', post_filter)
+    except:
+        raise RuntimeError
+    
     sleep(3600)
