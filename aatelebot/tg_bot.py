@@ -193,7 +193,7 @@ class Group():
         for post in update_new:
             copy_history = post.get('copy_history')
             if copy_history == None:
-                posts.append(VkPost(groups[i]['name'], post = post ) )
+                posts.append(VkPost(self.name, post = post ) )
 
         return posts 
 
