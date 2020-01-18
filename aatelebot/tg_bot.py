@@ -183,6 +183,7 @@ class Group():
         
         if update['count'] == 0:
             print('Group %s has no posts'%self.name)
+            update_new = []
         else:
             if update['items'][0].get('is_pinned') != 1:
                 update_new = update['items'][:new_count]
