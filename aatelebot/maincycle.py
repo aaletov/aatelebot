@@ -1,5 +1,5 @@
 import time
-from tg_bot import *
+import tg_bot
 import os.path
 from copy import deepcopy
 import shelve
