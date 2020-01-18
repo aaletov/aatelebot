@@ -285,7 +285,7 @@ class MyBot():
                 post.send(chat_id)
 
 
-def get_post_object(url, vkapi, v = v):
+def get_post_object(url, vkapi, v):
 #Получение объетка по url
 
     str1 = url.find('wall')
