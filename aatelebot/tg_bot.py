@@ -188,6 +188,8 @@ class Group():
                 update_new = update['items'][:new_count]
             elif new_count != 0:
                 update_new = update['items'][1:new_count+1]
+            else:
+                update_new = []
         
         posts = []
         for post in update_new:
