@@ -168,7 +168,7 @@ class VkPost():
 class Group():
 
     def __init__(self, groupobj):
-        self.owner_id = '-' + groupobj['id']
+        self.owner_id = '-' + str(groupobj['id'])
         self.name = groupobj['name']
         self.last_count = 0
 
