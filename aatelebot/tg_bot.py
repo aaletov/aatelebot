@@ -216,7 +216,8 @@ class MyBot():
         self.groups = [Group(i) for i in response['items'] ]
 
     def update_groups_list(self):
-        new_list = self.get_groups_list()
+        response = self.vkapi.groups.get(v = self.v, extended = '1')
+        new_list = [Group(i) for i in response['items'] ]
         new_ids = set([i.owner_id for i in new_list] )
         old_ids = set([i.owner_id for i in self.groups] )
         inter = new_ids & old_ids
