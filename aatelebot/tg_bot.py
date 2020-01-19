@@ -61,19 +61,12 @@ class VkPost():
             self.notext = True
 
         if self.videos != []:
-            if self.notext:
-                self.sendVideos(params, tgapi_url)
-            else:
-                self.sendVideos(params, tgapi_url)
-
+            self.sendVideos(params, tgapi_url)
             self.notext = True
 
         if self.docs != []:
-            if self.notext:
-                self.sendDocuments(params, tgapi_url)
-            else:
-                self.sendDocuments(params, tgapi_url)
-
+            self.sendDocuments(params, tgapi_url)
+            
     def sendMessage(self, params, tgapi_url):
         method = 'sendMessage'
         params.update({'text':self.text})
@@ -189,7 +182,6 @@ class Group():
     def get_group_updates(self, vkapi, v):
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v) 
-            print('got ', self.owner_id, v) ##########
         except:
             print('Unable to get %s \'s posts'%self.name)
             return []
@@ -261,15 +253,13 @@ class MyBot():
 
     def get_video_info(self):
     #Разовое получение информации о всех видео из апдейта(не вызывается вручную)
-        vkp_list = self.posts
         urls = []
         videos_list = []
         posts = []
         items = []
-        for i in range(len(vkp_list) ):
-            videos = vkp_list[i].videos
-            if videos != []:
-                videos_list += videos
+        for i in range(len(self.posts) ):
+            if self.posts[i].videos != []:
+                videos_list += self.posts[i].videos
                 posts.append(i)
     
         for i in range(len(videos_list)//100):
@@ -286,15 +276,13 @@ class MyBot():
             except:
                 urls.append(None)
 
-        for i in posts:
-            for j in range(len(vkp_list[i].videos)):
+        for i in self.posts:
+            for j in range(len(self.posts[i].videos)):
                 if urls[0].find('youtube') == -1 and urls[0].find('vimeo') == -1 and urls[0].find('rutube') == -1 and urls[0].find('yandex') == -1 :
-                    vkp_list[i].videos[j] = urls.pop(0)
+                    self.posts[i].videos[j] = urls.pop(0)
                 else:
-                    vkp_list[i].videos.pop(0)
-                    vkp_list[i].text += '\n' + urls.pop(0)
-
-        return vkp_list
+                    self.posts[i].videos.pop(0)
+                    self.posts[i].text += '\n' + urls.pop(0)
 
     def sendAll(self, chat_id, filter = []):
         for post in self.posts:

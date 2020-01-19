@@ -16,6 +16,9 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.update_groups_list() ####
 Bot.get_updates()
+for post in Bot.posts: ######
+    if post.videos != []:
+        print(post)
 Bot.sendAll('-1001430319971') ####
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
