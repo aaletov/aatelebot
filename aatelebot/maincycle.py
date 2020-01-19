@@ -3,6 +3,7 @@ from tg_bot import *
 import os.path
 from copy import deepcopy
 import shelve
+import pickle ##########
 import version 
 
 #vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206' #елкин
@@ -15,10 +16,8 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
 
-with shelve.open(path_ + 'botfile', flag ='n') as file:
-    for attr in dir(Bot):
-        print(attr, ' = ', getattr(Bot, attr) )
-        file[attr] = getattr(Bot, attr)
+with open('data.pickle', 'wb') as f:
+    pickle.dump(pickle.dump(pickle.dumps(Bot), f) )
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
     file['Bot'] = Bot
