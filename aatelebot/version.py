@@ -20,6 +20,7 @@ def download_video_vk(url, filename):
     r = requests.get(url).text
     site = BeautifulSoup(r, features = 'lxml')
     try:
+        print(site.find_all('source')) ##########################
         element = str( site.find_all('source')[1] ) ### 0 = 1
     except:
         print('Видеозапись была помечена модераторами сайта как «Материал для взрослых»')
