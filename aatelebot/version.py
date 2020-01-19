@@ -4,6 +4,7 @@ import vk
 import os
 
 path_ = os.getcwd() + '//'
+print('version path = ', path_) ##########
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
