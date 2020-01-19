@@ -14,7 +14,9 @@ v = version.get_version()
 
 Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
+Bot.update_groups_list() ####
 Bot.get_updates()
+Bot.sendAll('-1001430319971') ####
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
     file['Bot'] = Bot
