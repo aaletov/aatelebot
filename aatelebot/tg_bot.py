@@ -53,7 +53,7 @@ class VkPost():
         att_count = len(self.videos + self.photos + self.docs)
         params = {'chat_id': chat_id}
         if self.text != '' and att_count == 0:
-            sendMessage(self.group_name + '\n\n' + self.text, params, tgapi_url = tgapi_url)
+            self.sendMessage(self.group_name + '\n\n' + self.text, params, tgapi_url = tgapi_url)
 
         if self.photos != []:
             sendPhotos(self.photos, params, self.group_name, self.text, tgapi_url = tgapi_url)
@@ -61,7 +61,7 @@ class VkPost():
 
         if self.videos != []:
             if self.notext:
-                sendVideos(self.videos, params, self.group_name, text = '', tgapi_url = tgapi_url)
+                self.sendVideos(self.videos, params, self.group_name, text = '', tgapi_url = tgapi_url)
             else:
                 sendVideos(self.videos, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
@@ -69,9 +69,9 @@ class VkPost():
 
         if self.docs != []:
             if self.notext:
-                sendDocuments(self.docs, params, self.group_name, text = '', tgapi_url = tgapi_url)
+                self.sendDocuments(self.docs, params, self.group_name, text = '', tgapi_url = tgapi_url)
             else:
-                sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
+                self.sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
     def sendMessage(text, params, tgapi_url):
         method = 'sendMessage'
