@@ -53,25 +53,26 @@ class VkPost():
         att_count = len(self.videos + self.photos + self.docs)
         params = {'chat_id': chat_id}
         if self.text != '' and att_count == 0:
-            self.sendMessage(self.group_name + '\n\n' + self.text, params, tgapi_url = tgapi_url)
+            self.text = self.group_name + '\n\n' + self.text
+            self.sendMessage(params, tgapi_url)
 
         if self.photos != []:
-            self.sendPhotos(self.photos, params, self.group_name, tgapi_url = tgapi_url, text = self.text)
+            self.sendPhotos(params, tgapi_url)
             self.notext = True
 
         if self.videos != []:
             if self.notext:
-                self.sendVideos(self.videos, params, self.group_name, text = '', tgapi_url = tgapi_url)
+                self.sendVideos(params, tgapi_url)
             else:
-                self.sendVideos(self.videos, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
+                self.sendVideos(params, tgapi_url)
 
             self.notext = True
 
         if self.docs != []:
             if self.notext:
-                self.sendDocuments(self.docs, params, self.group_name, text = '', tgapi_url = tgapi_url)
+                self.sendDocuments(params, tgapi_url)
             else:
-                self.sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
+                self.sendDocuments(params, tgapi_url)
 
     def sendMessage(self, params, tgapi_url):
         method = 'sendMessage'
@@ -79,9 +80,14 @@ class VkPost():
         return(requests.post(tgapi_url + method, params))
 
     def sendPhotos(self, params, tgapi_url):
+        if not self.notext:
+            caption = self.group_name + '\n\n' + self.text
+        else:
+            caption = self.group_name
+
         if len(photos) == 1:
             method = 'sendPhoto'
-            params.update({'photo':self.photos[0], 'caption': self.group_name + '\n\n' + self.text})
+            params.update({'photo':self.photos[0], 'caption':caption})
 
         else:
             method = 'sendMediaGroup'
@@ -89,7 +95,7 @@ class VkPost():
                         {
                             'type':'photo',
                             'media': self.photos[0], 
-                            'caption': self.group_name + '\n\n' + self.text 
+                            'caption': caption 
                             }
                         ]
 
@@ -106,11 +112,16 @@ class VkPost():
         return(requests.post(tgapi_url + method, params))
 
     def sendVideos(self, params, tgapi_url):
+        if not self.notext:
+            caption = self.group_name + '\n\n' + self.tex
+        else:
+            caption = self.group_name
+        
         if len(videos) == 1:
             method = 'sendVideo'
             version.download_video_vk(self.videos[0], 'file')
             files = {'video': open(path_ + 'file.mp4', 'rb')} #multipart/form-data
-            params.update({'supports_streaming':True, 'caption':self.group_name + '\n\n' + self.text})
+            params.update({'supports_streaming':True, 'caption':caption})
             try:
                 response = requests.post(tgapi_url + method, params = params, files = files )
             except:
@@ -136,7 +147,7 @@ class VkPost():
                     )
                 files.update({filename + '.mp4': open(path_ + filename + '.mp4', 'rb') } )
 
-            media_array[0].update({'caption':self.group_name + '\n\n' + self.text} )
+            media_array[0].update({'caption':caption} )
             params.update({'media':json.dumps(media_array)} )
             try:
                 response = requests.post(tgapi_url + method, params = params, files = files)
@@ -147,9 +158,13 @@ class VkPost():
             return response
 
     def sendDocuments(self, params, tgapi_url):
+        if not self.notext:
+            caption = self.group_name + '\n\n' + self.tex
+        else:
+            caption = self.group_name
         method = 'sendDocument'
         params1 = copy(params)
-        params1.update({'document':self.docs[0], 'caption': self.group_name + '\n\n' + self.text})
+        params1.update({'document':self.docs[0], 'caption': caption})
         responses = [requests.post(tgapi_url + method, params1)]
         for doc in self.docs[1:]:
             params1 = copy(params)
