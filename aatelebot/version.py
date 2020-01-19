@@ -4,7 +4,6 @@ import vk
 import os
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-print('version path = ', path_) ##########
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text

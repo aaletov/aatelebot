@@ -7,7 +7,6 @@ from time import time, sleep
 from copy import deepcopy, copy
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-print('tg_bot path = ', path_) #############
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 
 class VkPost():
@@ -23,7 +22,7 @@ class VkPost():
         self.docs = []
         self.owner_id = post['owner_id']
         self.date = post['date']
-        self.notext = True
+        self.notext = False
 
         if post != None:
             if post['marked_as_ads'] == 1:
@@ -67,6 +66,8 @@ class VkPost():
 
         if self.docs != []:
             self.sendDocuments(params, tgapi_url)
+
+        self.notext = False
             
     def sendMessage(self, params, tgapi_url):
         method = 'sendMessage'
