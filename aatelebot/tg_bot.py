@@ -248,7 +248,7 @@ class MyBot():
             self.posts += group.get_group_updates(self.vkapi, v = self.v)
             sleep(0.33)
 
-        self.posts = self.get_video_info()
+        self.get_video_info()
         self.posts.sort(key = lambda post: int(post.date) )
 
     def get_video_info(self):
