@@ -16,6 +16,11 @@ Bot.get_groups_list()
 Bot.get_updates()
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
+    for attr in dir(Bot):
+        print(attr, ' = ', getattr(Bot, attr) )
+        file[attr] = getattr(Bot, attr)
+
+with shelve.open(path_ + 'botfile', flag ='n') as file:
     file['Bot'] = Bot
 
 while True:
