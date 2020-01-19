@@ -16,17 +16,17 @@ Bot.get_groups_list()
 Bot.get_updates()
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
-    file['Bot'] = Bot
+    file['groups'] = Bot.groups
 
 while True:
     with shelve.open(path_ + 'botfile', flag ='r') as file:
-        Bot = file['Bot']
+        Bot.groups = file['groups']
 
     Bot.update_groups_list()
     Bot.get_updates()
 
     with shelve.open(path_ + 'botfile', flag ='w') as file:
-        file['Bot'] = Bot
+        file['groups'] = Bot.groups
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
         post_filter = eval(file.read() )[0].keys()
