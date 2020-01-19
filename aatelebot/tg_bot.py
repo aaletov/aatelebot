@@ -85,7 +85,7 @@ class VkPost():
         else:
             caption = self.group_name
 
-        if len(photos) == 1:
+        if len(self.photos) == 1:
             method = 'sendPhoto'
             params.update({'photo':self.photos[0], 'caption':caption})
 
@@ -117,7 +117,7 @@ class VkPost():
         else:
             caption = self.group_name
         
-        if len(videos) == 1:
+        if len(self.videos) == 1:
             method = 'sendVideo'
             version.download_video_vk(self.videos[0], 'file')
             files = {'video': open(path_ + 'file.mp4', 'rb')} #multipart/form-data
