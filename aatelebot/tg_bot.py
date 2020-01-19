@@ -73,27 +73,27 @@ class VkPost():
             else:
                 self.sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
-    def sendMessage(self, text, params, tgapi_url):
+    def sendMessage(self, params, tgapi_url):
         method = 'sendMessage'
-        params.update({'text':text})
+        params.update({'text':self.text})
         return(requests.post(tgapi_url + method, params))
 
-    def sendPhotos(self, photos, params, group_name, tgapi_url, text = ''):
+    def sendPhotos(self, params, tgapi_url):
         if len(photos) == 1:
             method = 'sendPhoto'
-            params.update({'photo':photos[0], 'caption': group_name + '\n\n' + text})
+            params.update({'photo':self.photos[0], 'caption': self.group_name + '\n\n' + self.text})
 
         else:
             method = 'sendMediaGroup'
             media_array = [
                         {
                             'type':'photo',
-                            'media': photos[0], 
-                            'caption': group_name + '\n\n' + text 
+                            'media': self.photos[0], 
+                            'caption': self.group_name + '\n\n' + self.text 
                             }
                         ]
 
-            for photo in photos[1:]:
+            for photo in self.photos[1:]:
                 media_array.append(
                     {
                         'type':'photo', 
@@ -105,12 +105,12 @@ class VkPost():
 
         return(requests.post(tgapi_url + method, params))
 
-    def sendVideos(self, videos, params, group_name, tgapi_url, text = ''):
+    def sendVideos(self, params, tgapi_url):
         if len(videos) == 1:
             method = 'sendVideo'
-            version.download_video_vk(videos[0], 'file')
+            version.download_video_vk(self.videos[0], 'file')
             files = {'video': open(path_ + 'file.mp4', 'rb')} #multipart/form-data
-            params.update({'supports_streaming':True, 'caption':group_name + '\n\n' + text})
+            params.update({'supports_streaming':True, 'caption':self.group_name + '\n\n' + self.text})
             try:
                 response = requests.post(tgapi_url + method, params = params, files = files )
             except:
@@ -124,9 +124,9 @@ class VkPost():
             media_array = []
             files = {}
 
-            for i in range(len(videos)):
+            for i in range(len(self.videos)):
                 filename = 'file' + str(i)
-                version.download_video_vk(videos[i], filename)
+                version.download_video_vk(self.videos[i], filename)
                 media_array.append(
                     {
                         'type':'video', 
@@ -136,7 +136,7 @@ class VkPost():
                     )
                 files.update({filename + '.mp4': open(path_ + filename + '.mp4', 'rb') } )
 
-            media_array[0].update({'caption':group_name + '\n\n' + text} )
+            media_array[0].update({'caption':self.group_name + '\n\n' + self.text} )
             params.update({'media':json.dumps(media_array)} )
             try:
                 response = requests.post(tgapi_url + method, params = params, files = files)
@@ -146,12 +146,12 @@ class VkPost():
 
             return response
 
-    def sendDocuments(self, docs, params, group_name, tgapi_url, text = ''):
+    def sendDocuments(self, params, tgapi_url):
         method = 'sendDocument'
         params1 = copy(params)
-        params1.update({'document':docs[0], 'caption': group_name + '\n\n' + text})
+        params1.update({'document':self.docs[0], 'caption': self.group_name + '\n\n' + self.text})
         responses = [requests.post(tgapi_url + method, params1)]
-        for doc in docs[1:]:
+        for doc in self.docs[1:]:
             params1 = copy(params)
             params1.update({'document':doc})
             responses.append(requests.post(tgapi_url + method, params1) )
