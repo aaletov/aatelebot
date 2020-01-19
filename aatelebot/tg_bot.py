@@ -8,6 +8,7 @@ from copy import deepcopy, copy
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
+v = version.get_version()
 
 class VkPost():
     def __init__(self, group_name, post = None):
@@ -212,7 +213,7 @@ class Group():
 
 
 class MyBot():
-    def __init__(self, vktoken, tgtoken, v):
+    def __init__(self, vktoken, tgtoken, v = v):
         self.tgapi_url = "https://api.telegram.org/bot{}/".format(tgtoken)
         session = vk.Session(access_token = vktoken)
         self.vkapi = vk.API(session)
