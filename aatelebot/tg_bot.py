@@ -6,7 +6,7 @@ import json
 from time import time, sleep
 from copy import deepcopy, copy
 
-path_ = os.getcwd() + '//' + 'aatelebot' + '//'
+path_ = os.getcwd() + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 
 class VkPost():

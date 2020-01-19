@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import vk
 import os
 
-path_ = os.getcwd() + '//'
+path_ = os.getcwd() + '//' 
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
