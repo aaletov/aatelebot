@@ -293,6 +293,9 @@ class MyBot():
                 post.send(chat_id, self.tgapi_url)
                 sleep(1)
 
+    def __call__(self):
+        print('called')
+
 
 def get_post_object(url, vkapi, v):
 #Получение объетка по url
