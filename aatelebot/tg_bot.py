@@ -56,14 +56,14 @@ class VkPost():
             self.sendMessage(self.group_name + '\n\n' + self.text, params, tgapi_url = tgapi_url)
 
         if self.photos != []:
-            sendPhotos(self.photos, params, self.group_name, self.text, tgapi_url = tgapi_url)
+            self.sendPhotos(self.photos, params, self.group_name, self.text, tgapi_url = tgapi_url)
             self.notext = True
 
         if self.videos != []:
             if self.notext:
                 self.sendVideos(self.videos, params, self.group_name, text = '', tgapi_url = tgapi_url)
             else:
-                sendVideos(self.videos, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
+                self.sendVideos(self.videos, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
             self.notext = True
 
