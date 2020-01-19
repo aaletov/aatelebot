@@ -109,7 +109,7 @@ class VkPost():
 
     def sendVideos(self, params, tgapi_url):
         if not self.notext:
-            caption = self.group_name + '\n\n' + self.tex
+            caption = self.group_name + '\n\n' + self.text
         else:
             caption = self.group_name
         
