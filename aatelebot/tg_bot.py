@@ -300,6 +300,7 @@ class MyBot():
         for post in self.posts:
             if str(post.owner_id) not in filter:
                 post.send(chat_id, self.tgapi_url)
+                sleep(1)
 
 
 def get_post_object(url, vkapi, v):

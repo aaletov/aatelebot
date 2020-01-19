@@ -36,7 +36,6 @@ while True:
     
     try:
         Bot.sendAll('-1001430319971')
-        sleep(1)
         Bot.sendAll('-1001185715274', post_filter)
     except:
         raise RuntimeError
