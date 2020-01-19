@@ -284,7 +284,7 @@ class MyBot():
     def sendAll(self, chat_id, filter = []):
         for post in self.posts:
             if str(post.owner_id) not in filter:
-                post.send(chat_id)
+                post.send(chat_id, self.tgapi_url)
 
 
 def get_post_object(url, vkapi, v):
