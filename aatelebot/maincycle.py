@@ -16,8 +16,8 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
 
-with open('data.pickle', 'wb') as f:
-    pickle.dump(pickle.dump(pickle.dumps(Bot), f) )
+with open(path_ + 'data.pickle', 'wb') as f:
+    pickle.dump(pickle.dumps(Bot), f)
 
 with shelve.open(path_ + 'botfile', flag ='n') as file:
     file['Bot'] = Bot
