@@ -73,12 +73,12 @@ class VkPost():
             else:
                 self.sendDocuments(self.docs, params, self.group_name, text = self.text, tgapi_url = tgapi_url)
 
-    def sendMessage(text, params, tgapi_url):
+    def sendMessage(self, text, params, tgapi_url):
         method = 'sendMessage'
         params.update({'text':text})
         return(requests.post(tgapi_url + method, params))
 
-    def sendPhotos(photos, params, group_name, tgapi_url, text = ''):
+    def sendPhotos(self, photos, params, group_name, tgapi_url, text = ''):
         if len(photos) == 1:
             method = 'sendPhoto'
             params.update({'photo':photos[0], 'caption': group_name + '\n\n' + text})
@@ -105,7 +105,7 @@ class VkPost():
 
         return(requests.post(tgapi_url + method, params))
 
-    def sendVideos(videos, params, group_name, tgapi_url, text = ''):
+    def sendVideos(self, videos, params, group_name, tgapi_url, text = ''):
         if len(videos) == 1:
             method = 'sendVideo'
             version.download_video_vk(videos[0], 'file')
@@ -146,7 +146,7 @@ class VkPost():
 
             return response
 
-    def sendDocuments(docs, params, group_name, tgapi_url, text = ''):
+    def sendDocuments(self, docs, params, group_name, tgapi_url, text = ''):
         method = 'sendDocument'
         params1 = copy(params)
         params1.update({'document':docs[0], 'caption': group_name + '\n\n' + text})
