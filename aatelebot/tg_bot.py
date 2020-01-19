@@ -276,7 +276,7 @@ class MyBot():
             except:
                 urls.append(None)
 
-        for i in self.posts:
+        for i in len(self.posts):
             for j in range(len(self.posts[i].videos)):
                 if urls[0].find('youtube') == -1 and urls[0].find('vimeo') == -1 and urls[0].find('rutube') == -1 and urls[0].find('yandex') == -1 :
                     self.posts[i].videos[j] = urls.pop(0)
