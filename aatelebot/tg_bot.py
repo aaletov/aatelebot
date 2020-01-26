@@ -5,6 +5,7 @@ import os
 import json
 from time import time, sleep
 from copy import deepcopy, copy
+import shelve
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
@@ -182,6 +183,9 @@ class Group():
         self.name = groupobj['name']
         self.last_count = 0
 
+    def __str__(self):
+        return('name = ' + self.name + 'id = ' + self.owner_id)
+
     def get_group_updates(self, vkapi, v):
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v) 
@@ -208,6 +212,7 @@ class Group():
             if copy_history == None:
                 posts.append(VkPost(self.name, post = post ) )
 
+        print('Got updates for ', self)
         return posts 
 
 
@@ -292,6 +297,18 @@ class MyBot():
             if str(post.owner_id) not in filter:
                 post.send(chat_id, self.tgapi_url)
                 sleep(1)
+
+    def save_groups(self):
+        print('\n\nSaving groups...\n')
+        for group in self.groups:
+            print(group, 'last_count = ' + group.last_count)
+
+        with shelve.open(path_ + 'botfile', flag ='n') as file:
+            file['groups'] = self.groups
+
+    def read_groups(self):
+        with shelve.open(path_ + 'botfile', flag ='r') as file:
+            self.groups = file['groups']
 
     def __call__(self):
         print('called')
