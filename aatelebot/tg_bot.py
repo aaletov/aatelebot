@@ -6,19 +6,10 @@ import json
 from time import time, sleep
 from copy import deepcopy, copy
 import shelve
-import logging
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ =  ''
 v = version.get_version()
-
-form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
-to_console = logging.StreamHandler()
-to_file = logging.FileHandler(filename = path_ + 'log.log')
-to_console.setFormatter(logging.Formatter() )
-to_file.setFormatter(form)
-logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
-logging.info('Started...')
 
 class VkPost():
     def __init__(self, group_name, post = None):
@@ -132,7 +123,7 @@ class VkPost():
                 response = requests.post(tgapi_url + method, params = params, files = files )
             except:
                 response = None
-                logging.error('Upload Error')
+                print('Upload Error')
 
             return response
 
@@ -159,7 +150,7 @@ class VkPost():
                 response = requests.post(tgapi_url + method, params = params, files = files)
             except:
                 response = None
-                logging.error('Upload Error')
+                print('Upload Error')
 
             return response
 
@@ -199,13 +190,13 @@ class Group():
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v) 
         except:
-            logging.warning('Unable to get %s \'s posts'%self.name)
+            print('Unable to get %s \'s posts'%self.name)
             return []
         new_count = update['count'] - self.last_count
         self.last_count = update['count']
         
         if update['count'] == 0:
-            logging.info('Group %s has no posts'%self.name)
+            print('Group %s has no posts'%self.name)
             update_new = []
         else:
             if update['items'][0].get('is_pinned') != 1:
@@ -221,7 +212,7 @@ class Group():
             if copy_history == None:
                 posts.append(VkPost(self.name, post = post ) )
 
-        logging.info('Got updates for '+ str(self) )
+        print('Got updates for '+ str(self) )
         return posts 
 
 
@@ -308,9 +299,9 @@ class MyBot():
                 sleep(1)
 
     def save_groups(self):
-        logging.info('\n\nSaving groups...\n')
+        print('\n\nSaving groups...\n')
         for group in self.groups:
-            logging.info('Saved '+ str(group) + ' last_count = ' + str(group.last_count) )
+            print('Saved '+ str(group) + ' last_count = ' + str(group.last_count) )
 
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups

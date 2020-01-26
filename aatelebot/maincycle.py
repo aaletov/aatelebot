@@ -14,7 +14,7 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
 Bot.save_groups()
-counts = [group.get('last_count') for group in Bot.groups]
+counts = [group.last_count for group in Bot.groups]
 
 def check_lcount(Bot, counts):
     for i in range(len(Bot.groups) ):
