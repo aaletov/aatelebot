@@ -7,6 +7,9 @@ from time import time, sleep
 from copy import deepcopy, copy
 import shelve
 
+import logging
+logging.basicConfig(filename='txt.log', level=logging.INFO)
+
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 v = version.get_version()
@@ -123,7 +126,7 @@ class VkPost():
                 response = requests.post(tgapi_url + method, params = params, files = files )
             except:
                 response = None
-                print('Upload Error')
+                logging.error('Upload Error')
 
             return response
 
@@ -150,7 +153,7 @@ class VkPost():
                 response = requests.post(tgapi_url + method, params = params, files = files)
             except:
                 response = None
-                print('Upload Error')
+                logging.error('Upload Error')
 
             return response
 
@@ -190,13 +193,13 @@ class Group():
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v) 
         except:
-            print('Unable to get %s \'s posts'%self.name)
+            logging.warning('Unable to get %s \'s posts'%self.name)
             return []
         new_count = update['count'] - self.last_count
         self.last_count = update['count']
         
         if update['count'] == 0:
-            print('Group %s has no posts'%self.name)
+            logging.info('Group %s has no posts'%self.name)
             update_new = []
         else:
             if update['items'][0].get('is_pinned') != 1:
@@ -212,7 +215,7 @@ class Group():
             if copy_history == None:
                 posts.append(VkPost(self.name, post = post ) )
 
-        print('Got updates for', self)
+        logging.info('Got updates for', self)
         return posts 
 
 
@@ -299,9 +302,9 @@ class MyBot():
                 sleep(1)
 
     def save_groups(self):
-        print('\n\nSaving groups...\n')
+        logging.info('\n\nSaving groups...\n')
         for group in self.groups:
-            print(group, 'last_count = ' + str(group.last_count) )
+            logging.info('Saved ', group, 'last_count = ' + str(group.last_count) )
 
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups
@@ -310,8 +313,6 @@ class MyBot():
         with shelve.open(path_ + 'botfile', flag ='r') as file:
             self.groups = file['groups']
 
-    def __call__(self):
-        print('called')
 
 
 def get_post_object(url, vkapi, v):
