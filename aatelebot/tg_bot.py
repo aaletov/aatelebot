@@ -16,6 +16,7 @@ v = version.get_version()
 form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
 to_console = logging.StreamHandler()
 to_file = logging.FileHandler(filename = path_ + 'txt.log')
+to_console.setFormatter(logging.Formatter() )
 to_file.setFormatter(form)
 logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
 

@@ -1,6 +1,7 @@
 import vk
 import logging
 import version
+import os
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206'
@@ -9,6 +10,7 @@ v = version.get_version()
 form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
 to_console = logging.StreamHandler()
 to_file = logging.FileHandler(filename = path_ + 'verify.log')
+to_console.setFormatter(logging.Formatter() )
 to_file.setFormatter(form)
 logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
 
