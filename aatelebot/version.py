@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import vk
 import os
 
-path_ = os.getcwd() + '//'
+path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = ''
 
 def get_version():

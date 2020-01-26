@@ -9,7 +9,7 @@ import shelve
 
 import logging
 
-path_ = os.getcwd() + '//' 
+path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ =  ''
 v = version.get_version()
 
@@ -19,6 +19,7 @@ to_file = logging.FileHandler(filename = path_ + 'txt.log')
 to_console.setFormatter(logging.Formatter() )
 to_file.setFormatter(form)
 logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
+logging.info('Started...')
 
 class VkPost():
     def __init__(self, group_name, post = None):
