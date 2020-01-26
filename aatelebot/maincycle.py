@@ -14,11 +14,20 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
 Bot.save_groups()
+counts = [group.get('last_count') for group in Bot.groups]
+
+def check_lcount(Bot, counts):
+    for i in range(len(Bot.groups) ):
+        if Bot.groups[i].last_count != counts[i]:
+            print('CHANGED', Bot.groups[i].owner_id, 'from', counts[i], 'to', Bot.groups[i].last_count)
+
 
 while True:
     Bot.read_groups()
     Bot.update_groups_list()
+    checl_lcount(Bot, counts) #######
     Bot.get_updates()
+    checl_lcount(Bot, counts) #######
     Bot.save_groups()    
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
