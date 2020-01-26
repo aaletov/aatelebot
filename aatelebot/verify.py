@@ -4,7 +4,7 @@ import version
 import os
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-vk_token = '0fd3e5674fbea380f6e011336a3e526fcbf950d3deab8b7dc4c6dff05fb166cac329e91e07715b3b4c206'
+vk_token = 'fd2a30aa9b8b12da50a4413607c997a5a04cdbd8aac9be707353cd3c2f95113753c8a08e4abe7ef5dacf2'
 session = vk.Session(access_token = vk_token)
 v = version.get_version()
 form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
