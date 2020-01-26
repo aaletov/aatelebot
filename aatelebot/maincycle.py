@@ -25,9 +25,9 @@ def check_lcount(Bot, counts):
 while True:
     Bot.read_groups()
     Bot.update_groups_list()
-    checl_lcount(Bot, counts) #######
+    check_lcount(Bot, counts) #######
     Bot.get_updates()
-    checl_lcount(Bot, counts) #######
+    check_lcount(Bot, counts) #######
     Bot.save_groups()    
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
