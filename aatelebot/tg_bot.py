@@ -9,8 +9,8 @@ import shelve
 
 import logging
 
-#path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-path_ =  ''
+path_ = os.getcwd() + '//' 
+#path_ =  ''
 v = version.get_version()
 
 form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')

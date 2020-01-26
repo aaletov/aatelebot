@@ -3,8 +3,8 @@ from bs4 import BeautifulSoup
 import vk
 import os
 
-#path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-path_ = ''
+path_ = os.getcwd() + '//'
+#path_ = ''
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
