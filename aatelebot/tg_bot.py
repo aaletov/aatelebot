@@ -184,7 +184,7 @@ class Group():
         self.last_count = 0
 
     def __str__(self):
-        return('name = ' + self.name + 'id = ' + self.owner_id)
+        return('name = ' + self.name + ' id = ' + self.owner_id)
 
     def get_group_updates(self, vkapi, v):
         try:
@@ -212,7 +212,7 @@ class Group():
             if copy_history == None:
                 posts.append(VkPost(self.name, post = post ) )
 
-        print('Got updates for ', self)
+        print('Got updates for', self)
         return posts 
 
 
@@ -301,7 +301,7 @@ class MyBot():
     def save_groups(self):
         print('\n\nSaving groups...\n')
         for group in self.groups:
-            print(group, 'last_count = ' + group.last_count)
+            print(group, 'last_count = ' + str(group.last_count) )
 
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups
