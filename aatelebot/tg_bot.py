@@ -8,15 +8,16 @@ from copy import deepcopy, copy
 import shelve
 
 import logging
-form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
-to_console = logging.StreamHandler()
-to_file = logging.FileHandler(filename = 'txt.log')
-to_file.setFormatter(form)
-logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 #path_ = 'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 v = version.get_version()
+
+form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
+to_console = logging.StreamHandler()
+to_file = logging.FileHandler(filename = path_ + 'txt.log')
+to_file.setFormatter(form)
+logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
 
 class VkPost():
     def __init__(self, group_name, post = None):
