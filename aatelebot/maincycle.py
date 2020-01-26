@@ -17,6 +17,7 @@ Bot.save_groups()
 counts = [group.last_count for group in Bot.groups]
 
 def check_lcount(Bot, counts):
+    print('Checking count')
     for i in range(len(Bot.groups) ):
         if Bot.groups[i].last_count != counts[i]:
             print('CHANGED', Bot.groups[i].owner_id, 'from', counts[i], 'to', Bot.groups[i].last_count)
