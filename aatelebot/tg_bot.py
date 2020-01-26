@@ -6,7 +6,6 @@ import json
 from time import time, sleep
 from copy import deepcopy, copy
 import shelve
-
 import logging
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'

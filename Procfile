@@ -1,1 +1,1 @@
-worker: python aatelebot//maincycle.py
+worker: python aatelebot//test.py
