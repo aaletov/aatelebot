@@ -1,2 +1,11 @@
-import version 
-version.download_video_vk('https://vk.com/video_ext.php?oid=-102087446&id=456267598&hash=3d0b03ac9a2b2f38&__ref=vk.api&api_hash=15794221207baeee8060a54c2e08_GYYDQNZRGM', 'file')
+import logging
+import os
+
+path_ = os.path.getcwd() + '//' + aatelebot + '//'
+form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
+to_console = logging.StreamHandler()
+to_file = logging.FileHandler(filename = path_ + 'testlog.log')
+to_console.setFormatter(logging.Formatter() )
+to_file.setFormatter(form)
+logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
+logging.info('Started...')
