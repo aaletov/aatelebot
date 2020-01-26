@@ -1,5 +1,5 @@
 import logging
-import os
+import os.path
 
 path_ = os.path.getcwd() + '//' + aatelebot + '//'
 form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
