@@ -264,7 +264,7 @@ class MyBot():
 
         self.get_video_info()
         self.posts.sort(key = lambda post: int(post.date) )
-        print('Succesful')
+        print('Получено %i новых постов'%len(self.posts) )
 
     def get_video_info(self):
     #Разовое получение информации о всех видео из апдейта(не вызывается вручную)
