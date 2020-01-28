@@ -8,7 +8,7 @@ from copy import deepcopy, copy
 import shelve
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-#path_ =  ''
+#path_ =  'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 v = version.get_version()
 
 class VkPost():

@@ -4,7 +4,7 @@ import vk
 import os
 
 path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-#path_ = ''
+#path_ =  'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 
 def get_version():
     r = requests.get('https://vk.com/dev/versions').text
