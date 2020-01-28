@@ -225,11 +225,13 @@ class MyBot():
 
     def get_groups_list(self):
     #Получение списка сообществ текущего пользователя
-
+        print('Getting groups list')
         response = self.vkapi.groups.get(v = self.v, extended = '1')
         self.groups = [Group(i) for i in response['items'] ]
+        print('Succesful')
 
     def update_groups_list(self):
+        print('Updating groups list')
         response = self.vkapi.groups.get(v = self.v, extended = '1')
         new_list = [Group(i) for i in response['items'] ]
         new_ids = set([i.owner_id for i in new_list] )
@@ -248,8 +250,10 @@ class MyBot():
         for i in range(len(new_list )):
             if new_list[i].owner_id in sub:
                 self.groups.append(new_list[i] )
+        print('Succesful')
 
     def get_updates(self):
+        print('Getting updates')
         self.posts = []
         for group in self.groups:
             self.posts += group.get_group_updates(self.vkapi, v = self.v)
@@ -257,9 +261,11 @@ class MyBot():
 
         self.get_video_info()
         self.posts.sort(key = lambda post: int(post.date) )
+        print('Succesful')
 
     def get_video_info(self):
     #Разовое получение информации о всех видео из апдейта(не вызывается вручную)
+        print('Getting video info')
         urls = []
         videos_list = []
         vid_posts = []
@@ -286,24 +292,29 @@ class MyBot():
         for i in range(len(self.posts) ):
             for j in range(len(self.posts[i].videos)):
                 if urls[0].find('youtube') == -1 and urls[0].find('vimeo') == -1 and urls[0].find('rutube') == -1 and urls[0].find('yandex') == -1 :
-                    print(self.posts[i].videos[j]) #####
-                    print(urls[0]) ######
+                    #print(self.posts[i].videos[j]) 
+                    #print(urls[0]) 
                     self.posts[i].videos[j] = urls.pop(0)
                 else:
                     self.posts[i].videos.pop(0)
                     self.posts[i].text += '\n' + urls.pop(0)
+        print('Succesful')
 
     def sendAll(self, chat_id, filter = []):
+        print('Sending messages')
         for post in self.posts:
             if str(post.owner_id) not in filter:
                 post.send(chat_id, self.tgapi_url)
                 sleep(1)
+        print('Succesful')
 
     def save_groups(self):
+        print('Saving groups')
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups
 
     def read_groups(self):
+        print('Reading groups')
         with shelve.open(path_ + 'botfile', flag ='r') as file:
             self.groups = file['groups']
 

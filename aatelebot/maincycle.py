@@ -19,25 +19,10 @@ for post in Bot.posts:
 Bot.save_groups()
 counts = [group.last_count for group in Bot.groups]
 
-def check_lcount(Bot, counts):
-    print('Checking count')
-    for i in range(len(Bot.groups) ):
-        if Bot.groups[i].last_count != counts[i]:
-            print('CHANGED', str(Bot.groups[i].owner_id), 'from', counts[i], 'to', Bot.groups[i].last_count)
-            log('CHANGED' + str(Bot.groups[i].owner_id) + 'from' + str(counts[i]) + 'to' + str(Bot.groups[i].last_count) )
-        else:
-            log('OK')
-
-def log(text):
-    with open(path_ + 'log.txt', 'w') as f:
-        f.write(text)
-        
 while True:
     Bot.read_groups()
     Bot.update_groups_list()
-    check_lcount(Bot, counts) #######
     Bot.get_updates()
-    check_lcount(Bot, counts) #######
     Bot.save_groups()    
 
     with open(path_ + 'filter.txt', 'r', encoding = 'utf-8') as file:
