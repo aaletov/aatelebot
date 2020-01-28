@@ -23,8 +23,8 @@ def check_lcount(Bot, counts):
     print('Checking count')
     for i in range(len(Bot.groups) ):
         if Bot.groups[i].last_count != counts[i]:
-            print('CHANGED', Bot.groups[i].owner_id, 'from', counts[i], 'to', Bot.groups[i].last_count)
-            log('CHANGED' + Bot.groups[i].owner_id + 'from' + counts[i] + 'to' + Bot.groups[i].last_count)
+            print('CHANGED', str(Bot.groups[i].owner_id), 'from', counts[i], 'to', Bot.groups[i].last_count)
+            log('CHANGED' + str(Bot.groups[i].owner_id) + 'from' + str(counts[i]) + 'to' + str(Bot.groups[i].last_count) )
         else:
             log('OK')
 
