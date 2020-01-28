@@ -181,7 +181,7 @@ class Group():
     def __init__(self, groupobj):
         self.owner_id = '-' + str(groupobj['id'])
         self.name = groupobj['name']
-        self.last_count = 0
+        self.last_time = time()
 
     def __str__(self):
         return('name = ' + self.name + ' id = ' + self.owner_id)
@@ -192,20 +192,22 @@ class Group():
         except:
             print('Unable to get %s \'s posts'%self.name)
             return []
-        new_count = update['count'] - self.last_count
-        self.last_count = update['count']
         
         if update['count'] == 0:
             print('Group %s has no posts'%self.name)
-            update_new = []
+            return []
         else:
-            if update['items'][0].get('is_pinned') != 1:
-                update_new = update['items'][:new_count]
-            elif new_count != 0:
-                update_new = update['items'][1:new_count+1]
+            if update['items'][0].get('is_pinned') == 1:
+                start = -2
             else:
-                update_new = []
-        
+                start = -1
+            self.last_time = update['items'][start]['date']
+            for post in update['items'][start::-1]:
+                if post['date'] > last_time:
+                    update_new.append(VkPost(post) )
+                else:
+                    break                    
+            
         posts = []
         for post in update_new:
             copy_history = post.get('copy_history')
