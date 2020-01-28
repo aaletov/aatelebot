@@ -187,6 +187,8 @@ class Group():
         return('name = ' + self.name + ' id = ' + self.owner_id)
 
     def get_group_updates(self, vkapi, v):
+        update_new = []
+        posts = []
         try:
             update = vkapi.wall.get(owner_id = self.owner_id, count = 15, v = v) 
         except:
@@ -208,7 +210,6 @@ class Group():
                 else:
                     break                    
             
-        posts = []
         for post in update_new:
             copy_history = post.get('copy_history')
             if copy_history == None:
