@@ -13,6 +13,9 @@ path_ = os.getcwd() + '//' + 'aatelebot' + '//'
 Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
+for post in Bot.posts:
+    if post.owner_id == '499059920':
+        print(post)
 Bot.save_groups()
 counts = [group.last_count for group in Bot.groups]
 

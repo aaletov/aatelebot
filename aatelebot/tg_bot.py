@@ -262,12 +262,12 @@ class MyBot():
     #Разовое получение информации о всех видео из апдейта(не вызывается вручную)
         urls = []
         videos_list = []
-        posts = []
+        vid_posts = []
         items = []
         for i in range(len(self.posts) ):
             if self.posts[i].videos != []:
                 videos_list += self.posts[i].videos
-                posts.append(i)
+                vid_posts.append(i)
     
         for i in range(len(videos_list)//100):
             part = videos_list[i*100:(i+1)*100]
