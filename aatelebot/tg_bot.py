@@ -314,6 +314,7 @@ class MyBot():
 
     def save_groups(self):
         print('Saving groups')
+        map(str, self.groups.last_time)
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups
 
@@ -321,6 +322,7 @@ class MyBot():
         print('Reading groups')
         with shelve.open(path_ + 'botfile', flag ='r') as file:
             self.groups = file['groups']
+        map(int, self.groups.last_time)
 
 
 
