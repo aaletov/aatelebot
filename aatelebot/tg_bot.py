@@ -181,10 +181,10 @@ class Group():
     def __init__(self, groupobj):
         self.owner_id = '-' + str(groupobj['id'])
         self.name = groupobj['name']
-        self.last_time = str(time() )
+        self.last_time = int(time() )
 
     def __str__(self):
-        return('name=' + self.name + ' id=' + self.owner_id + ' last_time=' + self.last_time )
+        return('name=' + self.name + ' id=' + self.owner_id + ' last_time=' + str(self.last_time) )
 
     def get_group_updates(self, vkapi, v):
         update_new = []
@@ -205,10 +205,10 @@ class Group():
                 start = -1
 
             for post in update['items'][start::-1]:
-                if post['date'] > int(self.last_time):
+                if post['date'] > self.last_time:
                     update_new.append(VkPost(post) )
                 else:
-                    self.last_time = str(update['items'][start]['date'])
+                    self.last_time = update['items'][start]['date']
                     break                    
             
         for post in update_new:
