@@ -206,8 +206,7 @@ class Group():
 
             for post in update['items'][start::-1]:
                 if post['date'] > self.last_time:
-                    print(post)
-                    update_new.append(VkPost(post) )
+                    update_new.append(post)
                 else:
                     self.last_time = update['items'][start]['date']
                     break                    
