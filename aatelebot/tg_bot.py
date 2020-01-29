@@ -181,10 +181,10 @@ class Group():
     def __init__(self, groupobj):
         self.owner_id = '-' + str(groupobj['id'])
         self.name = groupobj['name']
-        self.last_time = time()
+        self.last_time = str(time() )
 
     def __str__(self):
-        return('name=' + self.name + ' id=' + self.owner_id + ' last_time=' + str(self.last_time) )
+        return('name=' + self.name + ' id=' + self.owner_id + ' last_time=' + self.last_time )
 
     def get_group_updates(self, vkapi, v):
         update_new = []
@@ -205,10 +205,10 @@ class Group():
                 start = -1
 
             for post in update['items'][start::-1]:
-                if post['date'] > self.last_time:
+                if post['date'] > int(self.last_time):
                     update_new.append(VkPost(post) )
                 else:
-                    self.last_time = update['items'][start]['date']
+                    self.last_time = str(update['items'][start]['date'])
                     break                    
             
         for post in update_new:
@@ -296,8 +296,6 @@ class MyBot():
         for i in range(len(self.posts) ):
             for j in range(len(self.posts[i].videos)):
                 if urls[0].find('youtube') == -1 and urls[0].find('vimeo') == -1 and urls[0].find('rutube') == -1 and urls[0].find('yandex') == -1 :
-                    #print(self.posts[i].videos[j]) 
-                    #print(urls[0]) 
                     self.posts[i].videos[j] = urls.pop(0)
                 else:
                     self.posts[i].videos.pop(0)
@@ -314,7 +312,6 @@ class MyBot():
 
     def save_groups(self):
         print('Saving groups')
-        map(lambda x: str(x.last_time), self.groups)
         with shelve.open(path_ + 'botfile', flag ='n') as file:
             file['groups'] = self.groups
 
@@ -322,7 +319,6 @@ class MyBot():
         print('Reading groups')
         with shelve.open(path_ + 'botfile', flag ='r') as file:
             self.groups = file['groups']
-        map(lambda x: int(x.last_time), self.groups)
 
 
 
