@@ -14,10 +14,14 @@ Bot = MyBot(vktoken = vk_token, tgtoken = tg_token, v=v)
 Bot.get_groups_list()
 Bot.get_updates()
 Bot.save_groups()
-sleep(600)
+for group in Bot.groups:
+    print(group)
+sleep(1) #600
 
 while True:
     Bot.read_groups()
+    for group in Bot.groups:
+        print(group)
     Bot.update_groups_list()
     Bot.get_updates()
     Bot.save_groups()    

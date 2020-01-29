@@ -184,7 +184,7 @@ class Group():
         self.last_time = time()
 
     def __str__(self):
-        return('name = ' + self.name + ' id = ' + self.owner_id)
+        return('name = ' + self.name + ' id = ' + self.owner_id + ' last_time = ' + str(self.last_time) )
 
     def get_group_updates(self, vkapi, v):
         update_new = []
