@@ -1,11 +1,25 @@
-import logging
-import os.path
+from tg_bot import Group
+import shelve
+path_ =  'D:\\py3eg\\tgbots\\aatelebot\\aatelebot\\'
 
-path_ = os.getcwd() + '//' + 'aatelebot' + '//'
-form = logging.Formatter(fmt = '[%(asctime)s | %(levelname)s]: %(message)s', datefmt = '%m.%d.%Y %H:%M:%S')
-to_console = logging.StreamHandler()
-to_file = logging.FileHandler(filename = path_ + 'testlog.log')
-to_console.setFormatter(logging.Formatter() )
-to_file.setFormatter(form)
-logging.basicConfig(handlers = (to_file, to_console), level=logging.INFO)
-logging.info('Started...')
+obj = {
+"id": 179161054,
+"name": "мемы для любителей лизать пизду",
+"screen_name": "pussyloverz",
+"is_closed": 0,
+"type": "page",
+"is_admin": 0,
+"is_member": 1,
+"is_advertiser": 0
+}
+a = Group(obj)
+print(a)
+with shelve.open(path_ + 'test', flag = 'n') as file:
+    file['group'] = a
+print(a)
+a = None
+
+with shelve.open(path_ + 'test', flag = 'r') as file:
+    a = file['group']
+
+print(a)
