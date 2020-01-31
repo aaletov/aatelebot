@@ -199,17 +199,8 @@ class Group():
             print('Group %s has no posts'%self.name)
             return []
         else:
-            if update['items'][0].get('is_pinned') == 1:
-                start = -2
-            else:
-                start = -1
-
-            for post in update['items'][start::-1]:
-                if post['date'] > self.last_time:
-                    update_new.append(post)
-                else:
-                    self.last_time = update['items'][start]['date']
-                    break                    
+            update_new = filter(lambda x: x['date'] > self.last_time, update['items'] )
+            self.last_time = update_new[0]['date']
             
         for post in update_new:
             copy_history = post.get('copy_history')
@@ -340,4 +331,3 @@ def get_post_object(url, vkapi, v):
 
 if __name__ == '__main__':
     version.download_video_vk('https://vk.com/video_ext.php?oid=-102087446&id=456267598&hash=3d0b03ac9a2b2f38&__ref=vk.api&api_hash=15794221207baeee8060a54c2e08_GYYDQNZRGM', 'file')
-
