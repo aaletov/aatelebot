@@ -39,7 +39,7 @@ class VkPost():
                 for attachment in attachments:
                     type = attachment['type']
                     if type == 'photo':
-                        self.photos.append(attachment['photo']['sizes'][-1]['url'])
+                        self.photos.append(list(filter(lambda x:x['type'] not in ['o', 'p', 'q', 'r'], attachment['photo']['sizes'] ) )[-1]['url'])
 
                     elif type == 'video':
                         owner_id = str( attachment['video']['owner_id'] )
