@@ -116,7 +116,10 @@ class VkPost():
         
         if len(self.videos) == 1:
             method = 'sendVideo'
-            version.download_video_vk(self.videos[0], 'file')
+            try:
+                version.download_video_vk(self.videos[0], 'file')
+            except RuntimeError:
+                return None
             files = {'video': open(path_ + 'file.mp4', 'rb')} #multipart/form-data
             params.update({'supports_streaming':True, 'caption':caption})
             try:
