@@ -200,7 +200,7 @@ class Group():
             return []
         else:
             if update['items'][0].get('is_pinned') == 1:
-                update.pop(0)
+                update.pop([0])
            
             update['items'].reverse()
             for post in update['items']:
