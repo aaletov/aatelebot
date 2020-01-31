@@ -199,16 +199,14 @@ class Group():
             print('Group %s has no posts'%self.name)
             return []
         else:
-            update_new = list(filter(lambda x: x['date'] > self.last_time, update['items'] ) )
+            update_new = list(filter(lambda x: x['date'] > self.last_time and x.get('copy_history') == None, update['items'] ) )
             try:
                 self.last_time = update_new[0]['date']
             except:
                 return[]
             
         for post in update_new:
-            copy_history = post.get('copy_history')
-            if copy_history == None:
-                posts.append(VkPost(self.name, post = post ) )
+            posts.append(VkPost(self.name, post = post ) )
 
         return posts 
 
