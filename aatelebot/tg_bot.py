@@ -200,15 +200,14 @@ class Group():
             return []
         else:
             if update['items'][0].get('is_pinned') == 1:
-                start = -2
-            else:
-                start = -1
-
-            for post in update['items'][start::-1]:
+                update.pop(0)
+           
+            update['items'].reverse()
+            for post in update['items']:
                 if post['date'] > self.last_time:
                     update_new.append(post)
                 else:
-                    self.last_time = update['items'][start]['date']
+                    self.last_time = update['items'][-1]['date']
                     break                    
             
         for post in update_new:
