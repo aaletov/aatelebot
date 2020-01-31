@@ -203,7 +203,6 @@ class Group():
             try:
                 self.last_time = update_new[0]['date']
             except:
-                print('No new %s\'s posts'%self.name)
                 return[]
             
         for post in update_new:
