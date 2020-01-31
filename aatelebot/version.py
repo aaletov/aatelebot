@@ -24,7 +24,7 @@ def download_video_vk(url, filename):
         element = str( site.find_all('source')[1] ) ### 0 = 1 questionmark
     except:
         print('Видеозапись была помечена модераторами сайта как «Материал для взрослых»')
-        return RuntimeError
+        raise RuntimeError
     str1 = element.find('\"')+1
     str2 = element[str1:].find('\"') + str1
     url = element[str1:str2]
