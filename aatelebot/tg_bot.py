@@ -200,7 +200,11 @@ class Group():
             return []
         else:
             update_new = list(filter(lambda x: x['date'] > self.last_time, update['items'] ) )
-            self.last_time = update_new[0]['date']
+            try:
+                self.last_time = update_new[0]['date']
+            except:
+                print('No new %s\'s posts'%self.name)
+                return[]
             
         for post in update_new:
             copy_history = post.get('copy_history')
