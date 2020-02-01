@@ -27,10 +27,6 @@ class VkPost():
         self.notext = False
 
         if post != None:
-            if post['marked_as_ads'] == 1:
-                self.text = ''
-                return
-
             if post.get('text') != None:
                 self.text += post.get('text') 
 
@@ -201,7 +197,8 @@ class Group():
             print('Group %s has no posts'%self.name)
             return []
         else:
-            update_new = list(filter(lambda x: x['date'] > self.last_time and x.get('copy_history') == None, update['items'] ) )
+            fter = lambda x: x['date'] > self.last_time and x.get('copy_history') == None and x['marked_as_ads'] == 0 ######
+            update_new = list(filter(fter, update['items'] ) )
             try:
                 self.last_time = update_new[0]['date']
             except:
