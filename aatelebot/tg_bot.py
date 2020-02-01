@@ -197,7 +197,7 @@ class Group():
             print('Group %s has no posts'%self.name)
             return []
         else:
-            fter = lambda x: x['date'] > self.last_time and x.get('copy_history') == None and x['marked_as_ads'] == 0 ######
+            fter = lambda x: x['date'] > self.last_time and x.get('copy_history') == None and x['marked_as_ads'] == 0 and x.get('copyright') == None
             update_new = list(filter(fter, update['items'] ) )
             try:
                 self.last_time = update_new[0]['date']
