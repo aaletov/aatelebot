@@ -55,7 +55,6 @@ class VkPost():
         att_count = len(self.videos + self.photos + self.docs)
         params = {'chat_id': chat_id}
         if self.text != '' and att_count == 0:
-            self.text = self.group_name + '\n\n' + self.text
             self.sendMessage(params, tgapi_url)
 
         if self.photos != []:
@@ -73,7 +72,7 @@ class VkPost():
             
     def sendMessage(self, params, tgapi_url):
         method = 'sendMessage'
-        params.update({'text':self.text})
+        params.update({'text':self.group_name + '\n\n' + self.text})
         return(requests.post(tgapi_url + method, params))
 
     def sendPhotos(self, params, tgapi_url):
